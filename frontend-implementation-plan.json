@@ -1,124 +1,141 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Sign-Up Options & Interactive Anime Character Mascot with Plant Info Board",
+  "title": "Add Leaderboard and Anime Character Selection with Autonomous Movement",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Add sign-up/login screen with Gmail or mobile number authentication before main app access",
+      "summary": "Add a leaderboard screen that displays top users ranked by points with their anime character avatars",
       "acceptanceCriteria": [
-        "A dedicated sign-up/login screen is presented to new users before accessing the app.",
-        "User can enter a Gmail address or a mobile phone number to register.",
-        "Entered identifier is validated (basic email format check or phone number format check).",
-        "User profile is saved to the backend with the Gmail or mobile number identifier.",
-        "Returning users can log back in with the same identifier.",
-        "After successful sign-up/login, the user is taken to the main app (WelcomeScreen or camera view)."
+        "A leaderboard tab/icon is visible in the bottom navigation bar",
+        "The leaderboard screen displays users ranked by points in descending order",
+        "Each leaderboard entry shows the user's name, anime character avatar, and point total",
+        "The current logged-in user's entry is visually highlighted",
+        "The backend stores and exposes a query to retrieve top user scores"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/SignUpScreen.tsx",
-          "operation": "create",
-          "description": "Create a new SignUpScreen component that renders before WelcomeScreen. Display input fields for either Gmail address or mobile phone number with toggle/tab selection. Validate email format (basic regex) and phone number format (digits only). Use the authorization component's useInternetIdentity hook for authentication state. After Internet Identity login, call saveCallerUserProfile with the entered identifier (gmail or phone variant). On successful profile save, transition to WelcomeScreen. Show loading states during save and clear error messages. Style using Tailwind with the app's forest-green theme tokens."
+          "path": "frontend/src/components/BottomNavBar.tsx",
+          "operation": "modify",
+          "description": "Add a third navigation tab for the leaderboard with a trophy icon. Place it between the 'Scan' and 'Discoveries' tabs. Wire the tab to navigate to the new leaderboard route when clicked."
         },
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Modify App.tsx to add a new 'signUp' view state. Use the authorization component to check if the user is authenticated and has a profile. If authenticated but no profile exists (getCallerUserProfile returns null), render SignUpScreen. If profile exists, proceed to WelcomeScreen or camera as before. Import and integrate SignUpScreen component. Ensure the sign-up screen appears before any other app content for new users. Verify the component's usage instructions before implementing."
+          "path": "frontend/src/components/LeaderboardScreen.tsx",
+          "operation": "create",
+          "description": "Create a leaderboard screen component that fetches and displays the top users ranked by points. Show each user's display name, anime character avatar (using the avatar image URL from their profile), and total points. Visually highlight the current logged-in user's entry (e.g., with a border or background color). Handle loading and error states. Use the useGetLeaderboard hook to fetch data."
         },
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Add a new React Query mutation hook useSaveUserProfile that wraps actor.saveCallerUserProfile. Include invalidation of the 'currentUserProfile' query key on success so the app immediately reflects the new profile. Export the hook for use in SignUpScreen. Follow existing query hook patterns in the file."
+          "description": "Add a useGetLeaderboard query hook that fetches the leaderboard data from the backend actor's getLeaderboard method. Return an array of entries with Principal, points, and resolved user profile (name and character avatar). Handle the case where user profiles may not exist for some principals gracefully."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a route for the leaderboard screen in the authenticated app section. Register the route path (e.g., '/leaderboard') and render the LeaderboardScreen component when that route is active. Ensure the route is accessible after the user has completed profile setup."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add draggable anime character mascot overlay on CameraView screen",
+      "summary": "Add an anime character selection screen allowing users to choose from a roster of well-known anime characters",
       "acceptanceCriteria": [
-        "An anime character illustration is rendered as an overlay on the CameraView component.",
-        "The character is visible as soon as the camera view opens.",
-        "The character can be dragged and repositioned anywhere on the screen via touch (mobile) and mouse (desktop).",
-        "The character remains within screen bounds and does not disappear off-screen.",
-        "The character does not block camera capture controls (shutter button, etc.) when not being moved."
+        "A character selection screen is shown (e.g., after sign-up or accessible from a profile/settings area)",
+        "At least 2 characters per franchise are displayed (Naruto, One Piece, Bleach, Dragon Ball — at least 8 total)",
+        "Each character card shows the character's name, franchise badge, and a representative avatar illustration",
+        "The user can select one character and confirm their choice",
+        "The selected character is saved to the backend user profile",
+        "The selected character avatar is displayed next to the user's name in the app and on the leaderboard"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/DraggableMascot.tsx",
+          "path": "frontend/src/components/CharacterSelectionScreen.tsx",
           "operation": "create",
-          "description": "Create a DraggableMascot component that renders the generated anime-mascot.dim_256x512.png image from frontend/public/assets/generated/anime-mascot.dim_256x512.png as an absolutely positioned overlay. Implement drag functionality using mouse (onMouseDown/onMouseMove/onMouseUp) and touch events (onTouchStart/onTouchMove/onTouchEnd). Track position state (x, y) and dragging state. Apply boundary checks to ensure the mascot stays within the viewport (use window.innerWidth/innerHeight and the mascot's dimensions). Use pointer-events CSS to allow click-through when not dragging. Size the mascot appropriately for mobile (e.g., max-width 80px). Accept optional position and visibility props for integration with REQ-3 animation."
+          "description": "Create a character selection screen component that displays at least 8 anime characters (2 from each franchise: Naruto, One Piece, Bleach, Dragon Ball). Each character card should show the character's name, franchise badge, and avatar illustration from the generated assets (frontend/public/assets/generated/naruto-uzumaki-avatar.dim_128x128.png, frontend/public/assets/generated/sasuke-uchiha-avatar.dim_128x128.png, frontend/public/assets/generated/luffy-avatar.dim_128x128.png, frontend/public/assets/generated/zoro-avatar.dim_128x128.png, frontend/public/assets/generated/ichigo-avatar.dim_128x128.png, frontend/public/assets/generated/rukia-avatar.dim_128x128.png, frontend/public/assets/generated/goku-avatar.dim_128x128.png, frontend/public/assets/generated/vegeta-avatar.dim_128x128.png). Allow the user to select one character and confirm their choice. Use the useSelectCharacter mutation hook to save the selection. Show a confirmation message after successful selection."
         },
         {
-          "path": "frontend/src/components/CameraView.tsx",
+          "path": "frontend/src/data/animeCharacters.ts",
+          "operation": "create",
+          "description": "Create a data file that exports a static array of anime character objects. Each character object should include: id (unique string), name (character name), series (franchise name: Naruto, One Piece, Bleach, Dragon Ball), and imageUrl (workspace path to the generated avatar asset). Include all 8 characters: Naruto Uzumaki, Sasuke Uchiha, Monkey D. Luffy, Roronoa Zoro, Ichigo Kurosaki, Rukia Kuchiki, Son Goku, and Vegeta. Use the exact generated filenames from frontend/public/assets/generated/."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Import and render the DraggableMascot component as an overlay within CameraView. Position it above the camera preview but below any modal overlays (NotPlantOverlay, NotRealOverlay, PlantResultPanel). Ensure the mascot is visible as soon as the camera opens. Use z-index layering to keep the mascot above the video element but not blocking the shutter button. Pass any necessary props for mascot state management."
+          "description": "Add a useSelectCharacter mutation hook that calls the backend actor's selectCharacter method with the chosen AnimeCharacter object. Invalidate the 'currentUserProfile' query cache after a successful mutation so the UI reflects the updated profile immediately."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routing logic to show the CharacterSelectionScreen when a user has a profile but has not yet selected a character (check if userProfile.character is null or undefined). If the character is already selected, proceed to the main app views. Ensure the character selection step happens after profile creation and before the welcome/scan screens."
+        },
+        {
+          "path": "frontend/src/components/SignUpScreen.tsx",
+          "operation": "modify",
+          "description": "After a new user successfully creates their profile, navigate them to the character selection screen instead of directly to the main app. Update the onSuccess callback of the profile mutation to trigger navigation to the character selection route."
+        },
+        {
+          "path": "frontend/src/components/LeaderboardScreen.tsx",
+          "operation": "modify",
+          "description": "Update the leaderboard entry rendering to display the user's selected anime character avatar next to their name. Use the character.imageUrl from the user's profile. Ensure a fallback placeholder is shown if a user has no character selected."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Trigger animated sequence where mascot stands beside a board displaying plant benefits with text-to-speech",
+      "summary": "Each anime character should have autonomous animated movement on screen without player control",
       "acceptanceCriteria": [
-        "After a plant is successfully identified, a board element appears on screen alongside the anime character.",
-        "The anime character is positioned standing beside the board.",
-        "The plant's beneficial uses are displayed on the board with a typewriter/writing animation.",
-        "The Web Speech API reads the beneficial uses text aloud automatically when the board appears.",
-        "If SpeechSynthesis is not supported by the browser, the text on the board is still shown silently.",
-        "The animation and speech play without blocking the rest of the result UI (plant name, confidence, points).",
-        "The board and character can be dismissed or fade out after the speech completes or after a user tap."
+        "Each character has a distinct looping animation (idle, walk cycle, or signature move)",
+        "Animations play automatically without any user interaction or keyboard/touch input controlling them",
+        "Characters move across or within their designated area on screen autonomously",
+        "Different characters have visually distinct movement patterns that match their franchise style",
+        "Animations are smooth and do not cause performance issues on the main app screens"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/PlantInfoBoard.tsx",
+          "path": "frontend/src/components/AnimatedCharacter.tsx",
           "operation": "create",
-          "description": "Create a PlantInfoBoard component that displays the generated plant-board.dim_400x300.png image from frontend/public/assets/generated/plant-board.dim_400x300.png with plant benefits text overlaid. Accept props: benefitsText (string), onComplete (callback). Render the board image and animate the text using a typewriter effect (reveal characters incrementally with setTimeout or CSS animation). Use the Web Speech API (window.speechSynthesis) to speak the benefits text when the board appears. Check for SpeechSynthesis support and gracefully degrade if unavailable. Provide a dismiss button or auto-dismiss after speech completes. Style the text to appear chalk-like on the board surface. Position the board to leave space for the mascot beside it."
+          "description": "Create a reusable AnimatedCharacter component that accepts a character object as a prop and renders an autonomous animated character on screen. Use CSS animations (keyframes for translate, scale, or rotate) or canvas-based animation to create looping movement cycles. Each character should have a distinct animation pattern based on their id or series (e.g., Naruto runs with a forward lean, Goku has a power-up stance with aura pulse, Luffy stretches and bounces, Ichigo has a swift slash motion). Ensure animations loop infinitely and play automatically without requiring any user input. Optimize performance by using CSS transforms and will-change hints."
         },
         {
-          "path": "frontend/src/components/PlantResultPanel.tsx",
+          "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Import and conditionally render the PlantInfoBoard component within PlantResultPanel after a successful plant identification. Extract the plant's benefits text from the plantData (use the 'benefits' field). Render PlantInfoBoard below or alongside the existing result content. Coordinate the mascot position via a prop or state update to DraggableMascot so it moves beside the board during the animation. Trigger the board appearance with a slight delay after the panel slides up for a staged animation effect. On board completion or dismissal, allow the user to continue interacting with the result panel normally."
+          "description": "Add CSS keyframe animations for each character's autonomous movement pattern. Define at least 8 unique keyframe sets corresponding to the 8 selectable characters. Use transforms (translateX, translateY, scale, rotate) to create walking, running, or signature move cycles. Ensure animations are smooth (60fps) and loop infinitely with appropriate timing functions (ease-in-out, linear, or cubic-bezier)."
         },
         {
-          "path": "frontend/src/components/DraggableMascot.tsx",
+          "path": "frontend/src/components/CharacterSelectionScreen.tsx",
           "operation": "modify",
-          "description": "Extend DraggableMascot to accept an animationMode prop (e.g., 'free' or 'standBeside'). When animationMode is 'standBeside', animate the mascot to a fixed position next to the board (disable dragging during this mode). Use CSS transitions for smooth movement. Restore draggable behavior when the board is dismissed."
+          "description": "Replace the static character avatar images in the selection cards with the AnimatedCharacter component. Pass each character object to the component so users can preview the character's autonomous movement animation before selecting. Scale the animations down to fit within the card boundaries."
         },
         {
-          "path": "frontend/src/hooks/useSpeechSynthesis.ts",
-          "operation": "create",
-          "description": "Create a custom hook useSpeechSynthesis that wraps the Web Speech API. Export a speak function that accepts text and optional voice settings. Handle browser compatibility checks (window.speechSynthesis). Return loading/speaking state and an onComplete callback trigger. Use this hook in PlantInfoBoard to manage TTS playback."
+          "path": "frontend/src/components/LeaderboardScreen.tsx",
+          "operation": "modify",
+          "description": "Optionally add a small autonomous animated character preview next to the top-ranked user's entry (e.g., the #1 user's character performs a victory animation). Use the AnimatedCharacter component and ensure it does not cause layout shifts or performance issues in the scrollable leaderboard list."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Wire generated anime chibi character illustration into the app as the mascot overlay",
+      "summary": "Generate and integrate illustrated anime-style character avatars for each selectable character",
       "acceptanceCriteria": [
-        "An anime chibi character image is available as a static asset in frontend/public/assets/generated.",
-        "The character has a transparent background (PNG).",
-        "The character is used in REQ-2 and REQ-3 as the mascot overlay."
+        "8 character avatar images are available as static assets in frontend/public/assets/generated",
+        "Each avatar is visually distinct and identifiable by franchise and character",
+        "Avatars are used in the character selection screen cards and leaderboard entries"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/DraggableMascot.tsx",
+          "path": "frontend/src/data/animeCharacters.ts",
           "operation": "modify",
-          "description": "Reference the generated anime-mascot.dim_256x512.png image from the workspace path frontend/public/assets/generated/anime-mascot.dim_256x512.png in the DraggableMascot component's img src attribute. Use the exact generated filename with dimensions. Ensure the image is loaded as a static asset (e.g., src='/assets/generated/anime-mascot.dim_256x512.png'). Apply appropriate width/height or object-fit styling to maintain transparency and aspect ratio."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Wire generated wooden chalkboard illustration into the app for plant info display",
-      "acceptanceCriteria": [
-        "A chalkboard/wooden board image is available as a static asset in frontend/public/assets/generated.",
-        "The board has a transparent or neutral background so it can be overlaid on the camera view.",
-        "The board image is used in REQ-3 for the plant info display."
-      ],
-      "file_operations": [
+          "description": "Ensure all 8 character objects reference the correct generated avatar image paths: frontend/public/assets/generated/naruto-uzumaki-avatar.dim_128x128.png, frontend/public/assets/generated/sasuke-uchiha-avatar.dim_128x128.png, frontend/public/assets/generated/luffy-avatar.dim_128x128.png, frontend/public/assets/generated/zoro-avatar.dim_128x128.png, frontend/public/assets/generated/ichigo-avatar.dim_128x128.png, frontend/public/assets/generated/rukia-avatar.dim_128x128.png, frontend/public/assets/generated/goku-avatar.dim_128x128.png, and frontend/public/assets/generated/vegeta-avatar.dim_128x128.png. These are the exact filenames of the generated images."
+        },
         {
-          "path": "frontend/src/components/PlantInfoBoard.tsx",
+          "path": "frontend/src/components/CharacterSelectionScreen.tsx",
           "operation": "modify",
-          "description": "Reference the generated plant-board.dim_400x300.png image from the workspace path frontend/public/assets/generated/plant-board.dim_400x300.png in the PlantInfoBoard component's img src attribute. Use the exact generated filename with dimensions. Ensure the image is loaded as a static asset (e.g., src='/assets/generated/plant-board.dim_400x300.png'). Position the benefits text as an absolutely positioned overlay on top of the board image to simulate writing on a chalkboard."
+          "description": "Verify that each character card in the selection screen renders the correct avatar image from frontend/public/assets/generated/ using the imageUrl from the character object. Ensure images load correctly and have appropriate alt text for accessibility."
+        },
+        {
+          "path": "frontend/src/components/LeaderboardScreen.tsx",
+          "operation": "modify",
+          "description": "Verify that each leaderboard entry displays the user's selected character avatar using the imageUrl from their profile's character object. The images should be fetched from frontend/public/assets/generated/ and rendered at an appropriate size (e.g., 48x48 or 64x64 pixels). Ensure fallback handling if an avatar image fails to load."
         }
       ]
     }

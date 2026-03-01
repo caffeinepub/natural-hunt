@@ -19,8 +19,16 @@ export type Identifier = {
     __kind__: "phone";
     phone: string;
 };
-export interface UserProfile {
+export interface AnimeCharacter {
+    id: string;
     name: string;
+    series: string;
+    imageUrl: string;
+}
+export interface UserProfile {
+    character: AnimeCharacter;
+    name: string;
+    badge: string;
     identifier: Identifier;
 }
 export enum UserRole {
@@ -34,8 +42,10 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getDiscoveries(): Promise<Array<PlantIdentification>>;
+    getLeaderboard(): Promise<Array<[Principal, bigint]>>;
     getPoints(): Promise<bigint>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    selectCharacter(character: AnimeCharacter): Promise<void>;
 }

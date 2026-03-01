@@ -29,12 +29,20 @@ export const UserRole = IDL.Variant({
   'user' : IDL.Null,
   'guest' : IDL.Null,
 });
+export const AnimeCharacter = IDL.Record({
+  'id' : IDL.Text,
+  'name' : IDL.Text,
+  'series' : IDL.Text,
+  'imageUrl' : IDL.Text,
+});
 export const Identifier = IDL.Variant({
   'gmail' : IDL.Text,
   'phone' : IDL.Text,
 });
 export const UserProfile = IDL.Record({
+  'character' : AnimeCharacter,
   'name' : IDL.Text,
+  'badge' : IDL.Text,
   'identifier' : Identifier,
 });
 
@@ -71,6 +79,11 @@ export const idlService = IDL.Service({
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getDiscoveries' : IDL.Func([], [IDL.Vec(PlantIdentification)], ['query']),
+  'getLeaderboard' : IDL.Func(
+      [],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, IDL.Nat))],
+      ['query'],
+    ),
   'getPoints' : IDL.Func([], [IDL.Nat], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
@@ -79,6 +92,7 @@ export const idlService = IDL.Service({
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'selectCharacter' : IDL.Func([AnimeCharacter], [], []),
 });
 
 export const idlInitArgs = [];
@@ -105,9 +119,17 @@ export const idlFactory = ({ IDL }) => {
     'user' : IDL.Null,
     'guest' : IDL.Null,
   });
+  const AnimeCharacter = IDL.Record({
+    'id' : IDL.Text,
+    'name' : IDL.Text,
+    'series' : IDL.Text,
+    'imageUrl' : IDL.Text,
+  });
   const Identifier = IDL.Variant({ 'gmail' : IDL.Text, 'phone' : IDL.Text });
   const UserProfile = IDL.Record({
+    'character' : AnimeCharacter,
     'name' : IDL.Text,
+    'badge' : IDL.Text,
     'identifier' : Identifier,
   });
   
@@ -144,6 +166,11 @@ export const idlFactory = ({ IDL }) => {
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getDiscoveries' : IDL.Func([], [IDL.Vec(PlantIdentification)], ['query']),
+    'getLeaderboard' : IDL.Func(
+        [],
+        [IDL.Vec(IDL.Tuple(IDL.Principal, IDL.Nat))],
+        ['query'],
+      ),
     'getPoints' : IDL.Func([], [IDL.Nat], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
@@ -152,6 +179,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'selectCharacter' : IDL.Func([AnimeCharacter], [], []),
   });
 };
 

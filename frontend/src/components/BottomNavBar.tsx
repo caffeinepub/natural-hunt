@@ -1,9 +1,9 @@
-import { Camera, BookOpen, Leaf } from 'lucide-react';
+import { Camera, BookOpen, Leaf, Trophy } from 'lucide-react';
 import { useGetPoints } from '../hooks/useQueries';
 
 interface BottomNavBarProps {
-  currentView: 'camera' | 'discoveries';
-  onNavigate: (view: 'camera' | 'discoveries') => void;
+  currentView: 'camera' | 'discoveries' | 'leaderboard';
+  onNavigate: (view: 'camera' | 'discoveries' | 'leaderboard') => void;
 }
 
 export default function BottomNavBar({ currentView, onNavigate }: BottomNavBarProps) {
@@ -11,6 +11,7 @@ export default function BottomNavBar({ currentView, onNavigate }: BottomNavBarPr
 
   const tabs = [
     { id: 'camera' as const, label: 'Scan', icon: Camera },
+    { id: 'leaderboard' as const, label: 'Ranks', icon: Trophy },
     { id: 'discoveries' as const, label: 'Discoveries', icon: BookOpen },
   ];
 
@@ -45,7 +46,7 @@ export default function BottomNavBar({ currentView, onNavigate }: BottomNavBarPr
               <button
                 key={tab.id}
                 onClick={() => onNavigate(tab.id)}
-                className="flex flex-col items-center gap-1 px-6 py-2 rounded-2xl transition-all duration-300 relative group"
+                className="flex flex-col items-center gap-1 px-5 py-2 rounded-2xl transition-all duration-300 relative group"
                 style={{
                   color: isActive
                     ? 'oklch(0.72 0.14 75)'

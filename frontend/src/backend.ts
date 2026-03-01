@@ -108,8 +108,16 @@ export type Identifier = {
     __kind__: "phone";
     phone: string;
 };
-export interface UserProfile {
+export interface AnimeCharacter {
+    id: string;
     name: string;
+    series: string;
+    imageUrl: string;
+}
+export interface UserProfile {
+    character: AnimeCharacter;
+    name: string;
+    badge: string;
     identifier: Identifier;
 }
 export interface _CaffeineStorageRefillResult {
@@ -134,12 +142,14 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getDiscoveries(): Promise<Array<PlantIdentification>>;
+    getLeaderboard(): Promise<Array<[Principal, bigint]>>;
     getPoints(): Promise<bigint>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    selectCharacter(character: AnimeCharacter): Promise<void>;
 }
-import type { Identifier as _Identifier, UserProfile as _UserProfile, UserRole as _UserRole, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
+import type { AnimeCharacter as _AnimeCharacter, Identifier as _Identifier, UserProfile as _UserProfile, UserRole as _UserRole, _CaffeineStorageRefillInformation as __CaffeineStorageRefillInformation, _CaffeineStorageRefillResult as __CaffeineStorageRefillResult } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
     async _caffeineStorageBlobIsLive(arg0: Uint8Array): Promise<boolean> {
@@ -310,6 +320,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async getLeaderboard(): Promise<Array<[Principal, bigint]>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getLeaderboard();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getLeaderboard();
+            return result;
+        }
+    }
     async getPoints(): Promise<bigint> {
         if (this.processError) {
             try {
@@ -366,6 +390,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async selectCharacter(arg0: AnimeCharacter): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.selectCharacter(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.selectCharacter(arg0);
+            return result;
+        }
+    }
 }
 function from_candid_Identifier_n13(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _Identifier): Identifier {
     return from_candid_variant_n14(_uploadFile, _downloadFile, value);
@@ -389,14 +427,20 @@ function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Ar
     return value.length === 0 ? null : value[0];
 }
 function from_candid_record_n12(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    character: _AnimeCharacter;
     name: string;
+    badge: string;
     identifier: _Identifier;
 }): {
+    character: AnimeCharacter;
     name: string;
+    badge: string;
     identifier: Identifier;
 } {
     return {
+        character: value.character,
         name: value.name,
+        badge: value.badge,
         identifier: from_candid_Identifier_n13(_uploadFile, _downloadFile, value.identifier)
     };
 }
@@ -456,14 +500,20 @@ function to_candid_opt_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Arra
     return value === null ? candid_none() : candid_some(to_candid__CaffeineStorageRefillInformation_n2(_uploadFile, _downloadFile, value));
 }
 function to_candid_record_n18(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    character: AnimeCharacter;
     name: string;
+    badge: string;
     identifier: Identifier;
 }): {
+    character: _AnimeCharacter;
     name: string;
+    badge: string;
     identifier: _Identifier;
 } {
     return {
+        character: value.character,
         name: value.name,
+        badge: value.badge,
         identifier: to_candid_Identifier_n19(_uploadFile, _downloadFile, value.identifier)
     };
 }

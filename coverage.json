@@ -1,80 +1,83 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-03-01T02:27:11.990Z",
+  "generatedAt": "2026-03-01T04:07:52.105Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 5,
-    "implemented": 5,
+    "total": 4,
+    "implemented": 4,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Add a sign-up / login screen that allows users to register and authenticate using either their Gmail address or a mobile phone number. The screen should appear before the main app (before WelcomeScreen or camera access) and store the chosen identifier as part of the user profile in the backend.",
+        "summary": "Add a leaderboard screen that displays the top users ranked by points, showing each user's display name, selected anime character avatar, and total points score. The leaderboard should be accessible from the bottom navigation bar with a trophy or leaderboard icon tab.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/SignUpScreen.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/hooks/useQueries.ts"
+          "frontend/src/components/BottomNavBar.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/SignUpScreen.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/hooks/useQueries.ts"
+          "frontend/src/components/BottomNavBar.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Add a draggable anime character mascot overlay on the CameraView screen. The character must be visible whenever the camera is open and users must be able to drag/move it freely around the screen using touch or mouse interaction.",
+        "summary": "Add an anime character selection screen that allows users to choose their character from a roster of well-known characters spanning Naruto (e.g., Naruto Uzumaki, Sasuke Uchiha), One Piece (e.g., Luffy, Zoro), Bleach (e.g., Ichigo, Rukia), and Dragon Ball (e.g., Goku, Vegeta). The selected character should be saved to the user's profile and displayed on the leaderboard and throughout the app.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/DraggableMascot.tsx",
-          "frontend/src/components/CameraView.tsx"
+          "frontend/src/components/CharacterSelectionScreen.tsx",
+          "frontend/src/data/animeCharacters.ts",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/SignUpScreen.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/DraggableMascot.tsx",
-          "frontend/src/components/CameraView.tsx"
+          "frontend/src/components/CharacterSelectionScreen.tsx",
+          "frontend/src/data/animeCharacters.ts",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/App.tsx",
+          "frontend/src/components/SignUpScreen.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "When a plant is successfully identified, trigger an animated sequence where the anime character mascot: (1) stands beside a board that slides or appears on screen, (2) writes the identified plant's beneficial uses as text on that board, and (3) uses the Web Speech API (SpeechSynthesis) to speak the beneficial uses aloud. This sequence should play within the PlantResultPanel or as an overlay triggered after plant detection.",
+        "summary": "Each anime character should have its own autonomous animated movement on screen — characters walk, run, or perform signature moves independently without any player input. When a character is active (selected by the user or displayed on a shared screen), it should animate continuously using CSS or canvas-based animations that reflect the character's style (e.g., Naruto's running pose, Goku's power-up stance).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/PlantInfoBoard.tsx",
-          "frontend/src/components/PlantResultPanel.tsx",
-          "frontend/src/components/DraggableMascot.tsx",
-          "frontend/src/hooks/useSpeechSynthesis.ts"
+          "frontend/src/components/AnimatedCharacter.tsx",
+          "frontend/src/index.css",
+          "frontend/src/components/CharacterSelectionScreen.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/PlantInfoBoard.tsx",
-          "frontend/src/components/PlantResultPanel.tsx",
-          "frontend/src/components/DraggableMascot.tsx",
-          "frontend/src/hooks/useSpeechSynthesis.ts"
+          "frontend/src/components/AnimatedCharacter.tsx",
+          "frontend/src/index.css",
+          "frontend/src/components/CharacterSelectionScreen.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx"
         ]
       },
       {
         "id": "REQ-4",
-        "summary": "Generate an anime-style chibi character illustration to be used as the in-app mascot. The character should appear friendly and nature/plant-themed (e.g., wearing a green outfit with leaf motifs), suitable for overlaying on a camera view.",
+        "summary": "Generate illustrated anime-style character avatars for each selectable character: Naruto Uzumaki, Sasuke Uchiha, Monkey D. Luffy, Roronoa Zoro, Ichigo Kurosaki, Rukia Kuchiki, Son Goku, and Vegeta. Each avatar should be a simple stylized bust/portrait suitable for character selection cards and leaderboard entries.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/DraggableMascot.tsx"
+          "frontend/src/data/animeCharacters.ts",
+          "frontend/src/components/CharacterSelectionScreen.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/DraggableMascot.tsx"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Generate a wooden chalkboard illustration to serve as the board the anime character writes plant information on.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/PlantInfoBoard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/PlantInfoBoard.tsx"
+          "frontend/src/data/animeCharacters.ts",
+          "frontend/src/components/CharacterSelectionScreen.tsx",
+          "frontend/src/components/LeaderboardScreen.tsx"
         ]
       }
     ]
@@ -86,20 +89,26 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/anime-mascot.dim_256x512.png",
-    "frontend/public/assets/generated/plant-board.dim_400x300.png",
+    "frontend/public/assets/generated/goku-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/ichigo-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/luffy-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/naruto-uzumaki-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/rukia-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/sasuke-uchiha-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/vegeta-avatar.dim_128x128.png",
+    "frontend/public/assets/generated/zoro-avatar.dim_128x128.png",
     "frontend/src/App.tsx",
     "frontend/src/backend.d.ts",
     "frontend/src/backend.ts",
-    "frontend/src/components/CameraView.tsx",
-    "frontend/src/components/DraggableMascot.tsx",
-    "frontend/src/components/PlantInfoBoard.tsx",
-    "frontend/src/components/PlantResultPanel.tsx",
+    "frontend/src/components/AnimatedCharacter.tsx",
+    "frontend/src/components/BottomNavBar.tsx",
+    "frontend/src/components/CharacterSelectionScreen.tsx",
+    "frontend/src/components/LeaderboardScreen.tsx",
     "frontend/src/components/SignUpScreen.tsx",
+    "frontend/src/data/animeCharacters.ts",
     "frontend/src/declarations/backend.did.d.ts",
     "frontend/src/declarations/backend.did.js",
     "frontend/src/hooks/useQueries.ts",
-    "frontend/src/hooks/useSpeechSynthesis.ts",
     "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",

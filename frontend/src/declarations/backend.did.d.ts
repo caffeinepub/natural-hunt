@@ -10,6 +10,12 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface AnimeCharacter {
+  'id' : string,
+  'name' : string,
+  'series' : string,
+  'imageUrl' : string,
+}
 export type Identifier = { 'gmail' : string } |
   { 'phone' : string };
 export interface PlantIdentification {
@@ -17,7 +23,12 @@ export interface PlantIdentification {
   'identificationDate' : bigint,
   'imageUrl' : string,
 }
-export interface UserProfile { 'name' : string, 'identifier' : Identifier }
+export interface UserProfile {
+  'character' : AnimeCharacter,
+  'name' : string,
+  'badge' : string,
+  'identifier' : Identifier,
+}
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
@@ -54,10 +65,12 @@ export interface _SERVICE {
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getDiscoveries' : ActorMethod<[], Array<PlantIdentification>>,
+  'getLeaderboard' : ActorMethod<[], Array<[Principal, bigint]>>,
   'getPoints' : ActorMethod<[], bigint>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'selectCharacter' : ActorMethod<[AnimeCharacter], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

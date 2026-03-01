@@ -227,6 +227,152 @@
   75% { transform: translateY(-3px) rotate(2deg); }
 }
 
+/* ===== ANIME CHARACTER ANIMATIONS ===== */
+
+/* Naruto: forward-lean run with bounce */
+@keyframes naruto-run {
+  0%   { transform: translateY(0px) rotate(-5deg) scaleX(1); }
+  15%  { transform: translateY(-10px) rotate(-8deg) scaleX(0.95); }
+  30%  { transform: translateY(0px) rotate(-5deg) scaleX(1); }
+  45%  { transform: translateY(-6px) rotate(-7deg) scaleX(0.97); }
+  60%  { transform: translateY(0px) rotate(-5deg) scaleX(1); }
+  75%  { transform: translateY(-8px) rotate(-9deg) scaleX(0.96); }
+  100% { transform: translateY(0px) rotate(-5deg) scaleX(1); }
+}
+
+/* Sasuke: swift dash with slight lean */
+@keyframes sasuke-dash {
+  0%   { transform: translateX(0px) translateY(0px) rotate(0deg); }
+  20%  { transform: translateX(6px) translateY(-4px) rotate(3deg); }
+  40%  { transform: translateX(0px) translateY(0px) rotate(0deg); }
+  60%  { transform: translateX(-4px) translateY(-2px) rotate(-2deg); }
+  80%  { transform: translateX(2px) translateY(-5px) rotate(1deg); }
+  100% { transform: translateX(0px) translateY(0px) rotate(0deg); }
+}
+
+/* Luffy: rubber stretch bounce */
+@keyframes luffy-stretch {
+  0%   { transform: scaleY(1) scaleX(1) translateY(0px); }
+  20%  { transform: scaleY(1.15) scaleX(0.88) translateY(-8px); }
+  40%  { transform: scaleY(0.88) scaleX(1.12) translateY(4px); }
+  60%  { transform: scaleY(1.1) scaleX(0.92) translateY(-6px); }
+  80%  { transform: scaleY(0.95) scaleX(1.05) translateY(2px); }
+  100% { transform: scaleY(1) scaleX(1) translateY(0px); }
+}
+
+/* Zoro: sword-stance sway */
+@keyframes zoro-sway {
+  0%   { transform: rotate(0deg) translateY(0px); }
+  25%  { transform: rotate(-6deg) translateY(-3px); }
+  50%  { transform: rotate(0deg) translateY(0px); }
+  75%  { transform: rotate(6deg) translateY(-3px); }
+  100% { transform: rotate(0deg) translateY(0px); }
+}
+
+/* Ichigo: swift slash motion */
+@keyframes ichigo-slash {
+  0%   { transform: translateX(0px) rotate(0deg) scaleX(1); }
+  10%  { transform: translateX(-8px) rotate(-10deg) scaleX(1.05); }
+  25%  { transform: translateX(10px) rotate(8deg) scaleX(0.95); }
+  40%  { transform: translateX(0px) rotate(0deg) scaleX(1); }
+  55%  { transform: translateX(-5px) rotate(-6deg) scaleX(1.03); }
+  70%  { transform: translateX(7px) rotate(5deg) scaleX(0.97); }
+  85%  { transform: translateX(0px) rotate(0deg) scaleX(1); }
+  100% { transform: translateX(0px) rotate(0deg) scaleX(1); }
+}
+
+/* Rukia: graceful float */
+@keyframes rukia-float {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  20%  { transform: translateY(-10px) rotate(-3deg); }
+  40%  { transform: translateY(-5px) rotate(2deg); }
+  60%  { transform: translateY(-12px) rotate(-2deg); }
+  80%  { transform: translateY(-4px) rotate(3deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Goku: power-up pulse with aura */
+@keyframes goku-powerup {
+  0%   { transform: scale(1) translateY(0px); filter: brightness(1); }
+  15%  { transform: scale(1.08) translateY(-5px); filter: brightness(1.2); }
+  30%  { transform: scale(1) translateY(0px); filter: brightness(1); }
+  50%  { transform: scale(1.12) translateY(-8px); filter: brightness(1.3); }
+  65%  { transform: scale(1) translateY(0px); filter: brightness(1); }
+  80%  { transform: scale(1.06) translateY(-4px); filter: brightness(1.15); }
+  100% { transform: scale(1) translateY(0px); filter: brightness(1); }
+}
+
+/* Vegeta: proud stance with power surge */
+@keyframes vegeta-surge {
+  0%   { transform: translateY(0px) scaleY(1); filter: brightness(1); }
+  20%  { transform: translateY(-6px) scaleY(1.04); filter: brightness(1.15); }
+  35%  { transform: translateY(0px) scaleY(1); filter: brightness(1); }
+  55%  { transform: translateY(-9px) scaleY(1.06); filter: brightness(1.25); }
+  70%  { transform: translateY(-2px) scaleY(1.02); filter: brightness(1.1); }
+  85%  { transform: translateY(0px) scaleY(1); filter: brightness(1); }
+  100% { transform: translateY(0px) scaleY(1); filter: brightness(1); }
+}
+
+/* Aura pulse animations */
+@keyframes aura-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50%       { opacity: 0.8; transform: scale(1.1); }
+}
+
+/* Apply animations to character classes */
+.anim-naruto {
+  animation: naruto-run 0.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-sasuke {
+  animation: sasuke-dash 1.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-luffy {
+  animation: luffy-stretch 1.0s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  will-change: transform;
+}
+
+.anim-zoro {
+  animation: zoro-sway 1.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-ichigo {
+  animation: ichigo-slash 1.1s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-rukia {
+  animation: rukia-float 1.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.anim-goku {
+  animation: goku-powerup 1.0s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+.anim-vegeta {
+  animation: vegeta-surge 1.3s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+/* Aura effects */
+.anim-naruto-aura,
+.anim-sasuke-aura,
+.anim-luffy-aura,
+.anim-zoro-aura,
+.anim-ichigo-aura,
+.anim-rukia-aura,
+.anim-goku-aura,
+.anim-vegeta-aura {
+  animation: aura-pulse 1.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 /* ===== UTILITY CLASSES ===== */
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;

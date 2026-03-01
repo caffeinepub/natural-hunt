@@ -2,11 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-sign-up-login-screen-that-allows-users-to-register-and-authenticate-using-either-their-gmail-address-or-a-mobile-phone-number-the-screen-should-appear-before-the-main-app-before-welcomescreen-or-camera-access-and-store-the-chosen-identifier-as-part-of-the-user-profile-in-the-backend",
-      "featureTitle": "Add a sign-up / login screen that allows users to register and authenticate using either their Gmail address or a mobile phone number. The screen should appear before the main app (before WelcomeScreen or camera access) and store the chosen identifier as part of the user profile in the backend.",
+      "featureId": "feature-add-a-leaderboard-screen-that-displays-the-top-users-ranked-by-points-showing-each-user-s-display-name-selected-anime-character-avatar-and-total-points-score-the-leaderboard-should-be-accessible-from-the-bottom-navigation-bar-with-a-trophy-or-leaderboard-icon-tab",
+      "featureTitle": "Add a leaderboard screen that displays the top users ranked by points, showing each user's display name, selected anime character avatar, and total points score. The leaderboard should be accessible from the bottom navigation bar with a trophy or leaderboard icon tab.",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/SignUpScreen.tsx",
+        "frontend/src/components/BottomNavBar.tsx",
+        "frontend/src/components/LeaderboardScreen.tsx",
         "frontend/src/hooks/useQueries.ts"
       ],
       "components": [
@@ -25,11 +26,15 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-draggable-anime-character-mascot-overlay-on-the-cameraview-screen-the-character-must-be-visible-whenever-the-camera-is-open-and-users-must-be-able-to-drag-move-it-freely-around-the-screen-using-touch-or-mouse-interaction",
-      "featureTitle": "Add a draggable anime character mascot overlay on the CameraView screen. The character must be visible whenever the camera is open and users must be able to drag/move it freely around the screen using touch or mouse interaction.",
+      "featureId": "feature-add-an-anime-character-selection-screen-that-allows-users-to-choose-their-character-from-a-roster-of-well-known-characters-spanning-naruto-e-g-naruto-uzumaki-sasuke-uchiha-one-piece-e-g-luffy-zoro-bleach-e-g-ichigo-rukia-and-dragon-ball-e-g-goku-vegeta-the-selected-character-should-be-saved-to-the-user-s-profile-and-displayed-on-the-leaderboard-and-throughout-the-app",
+      "featureTitle": "Add an anime character selection screen that allows users to choose their character from a roster of well-known characters spanning Naruto (e.g., Naruto Uzumaki, Sasuke Uchiha), One Piece (e.g., Luffy, Zoro), Bleach (e.g., Ichigo, Rukia), and Dragon Ball (e.g., Goku, Vegeta). The selected character should be saved to the user's profile and displayed on the leaderboard and throughout the app.",
       "files": [
-        "frontend/src/components/CameraView.tsx",
-        "frontend/src/components/DraggableMascot.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/components/CharacterSelectionScreen.tsx",
+        "frontend/src/components/LeaderboardScreen.tsx",
+        "frontend/src/components/SignUpScreen.tsx",
+        "frontend/src/data/animeCharacters.ts",
+        "frontend/src/hooks/useQueries.ts"
       ],
       "components": [
         "camera@1.0.0",
@@ -47,13 +52,13 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-when-a-plant-is-successfully-identified-trigger-an-animated-sequence-where-the-anime-character-mascot-1-stands-beside-a-board-that-slides-or-appears-on-screen-2-writes-the-identified-plant-s-beneficial-uses-as-text-on-that-board-and-3-uses-the-web-speech-api-speechsynthesis-to-speak-the-beneficial-uses-aloud-this-sequence-should-play-within-the-plantresultpanel-or-as-an-overlay-triggered-after-plant-detection",
-      "featureTitle": "When a plant is successfully identified, trigger an animated sequence where the anime character mascot: (1) stands beside a board that slides or appears on screen, (2) writes the identified plant's beneficial uses as text on that board, and (3) uses the Web Speech API (SpeechSynthesis) to speak the beneficial uses aloud. This sequence should play within the PlantResultPanel or as an overlay triggered after plant detection.",
+      "featureId": "feature-each-anime-character-should-have-its-own-autonomous-animated-movement-on-screen-characters-walk-run-or-perform-signature-moves-independently-without-any-player-input-when-a-character-is-active-selected-by-the-user-or-displayed-on-a-shared-screen-it-should-animate-continuously-using-css-or-canvas-based-animations-that-reflect-the-character-s-style-e-g-naruto-s-running-pose-goku-s-power-up-stance",
+      "featureTitle": "Each anime character should have its own autonomous animated movement on screen — characters walk, run, or perform signature moves independently without any player input. When a character is active (selected by the user or displayed on a shared screen), it should animate continuously using CSS or canvas-based animations that reflect the character's style (e.g., Naruto's running pose, Goku's power-up stance).",
       "files": [
-        "frontend/src/components/DraggableMascot.tsx",
-        "frontend/src/components/PlantInfoBoard.tsx",
-        "frontend/src/components/PlantResultPanel.tsx",
-        "frontend/src/hooks/useSpeechSynthesis.ts"
+        "frontend/src/components/AnimatedCharacter.tsx",
+        "frontend/src/components/CharacterSelectionScreen.tsx",
+        "frontend/src/components/LeaderboardScreen.tsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "camera@1.0.0",
@@ -71,10 +76,12 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-generate-an-anime-style-chibi-character-illustration-to-be-used-as-the-in-app-mascot-the-character-should-appear-friendly-and-nature-plant-themed-e-g-wearing-a-green-outfit-with-leaf-motifs-suitable-for-overlaying-on-a-camera-view",
-      "featureTitle": "Generate an anime-style chibi character illustration to be used as the in-app mascot. The character should appear friendly and nature/plant-themed (e.g., wearing a green outfit with leaf motifs), suitable for overlaying on a camera view.",
+      "featureId": "feature-generate-illustrated-anime-style-character-avatars-for-each-selectable-character-naruto-uzumaki-sasuke-uchiha-monkey-d-luffy-roronoa-zoro-ichigo-kurosaki-rukia-kuchiki-son-goku-and-vegeta-each-avatar-should-be-a-simple-stylized-bust-portrait-suitable-for-character-selection-cards-and-leaderboard-entries",
+      "featureTitle": "Generate illustrated anime-style character avatars for each selectable character: Naruto Uzumaki, Sasuke Uchiha, Monkey D. Luffy, Roronoa Zoro, Ichigo Kurosaki, Rukia Kuchiki, Son Goku, and Vegeta. Each avatar should be a simple stylized bust/portrait suitable for character selection cards and leaderboard entries.",
       "files": [
-        "frontend/src/components/DraggableMascot.tsx"
+        "frontend/src/components/CharacterSelectionScreen.tsx",
+        "frontend/src/components/LeaderboardScreen.tsx",
+        "frontend/src/data/animeCharacters.ts"
       ],
       "components": [
         "camera@1.0.0",
@@ -88,27 +95,6 @@
       ],
       "testIds": [
         "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-generate-a-wooden-chalkboard-illustration-to-serve-as-the-board-the-anime-character-writes-plant-information-on",
-      "featureTitle": "Generate a wooden chalkboard illustration to serve as the board the anime character writes plant information on.",
-      "files": [
-        "frontend/src/components/PlantInfoBoard.tsx"
-      ],
-      "components": [
-        "camera@1.0.0",
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
       ],
       "confidence": "high"
     }

@@ -1,55 +1,71 @@
-import Map "mo:core/Map";
 import List "mo:core/List";
+import Map "mo:core/Map";
 import Principal "mo:core/Principal";
 
 module {
-  type OldUserProfile = {
+  public type Identifier = {
+    #gmail : Text;
+    #phone : Text;
+  };
+
+  public type OldUserProfile = {
     name : Text;
+    identifier : Identifier;
   };
 
-  type OldActor = {
-    userProfiles : Map.Map<Principal, OldUserProfile>;
-    userRewards : Map.Map<Principal, UserRewards>;
+  public type AnimeCharacter = {
+    id : Text;
+    name : Text;
+    imageUrl : Text;
+    series : Text;
   };
 
-  type UserRewards = {
-    points : Nat;
-    discoveries : List.List<PlantIdentification>;
+  public type NewUserProfile = {
+    name : Text;
+    identifier : Identifier;
+    character : AnimeCharacter;
+    badge : Text;
   };
 
-  type PlantIdentification = {
+  public type PlantIdentification = {
     plantName : Text;
     imageUrl : Text;
     identificationDate : Int;
   };
 
-  type NewUserProfile = {
-    name : Text;
-    identifier : Identifier;
+  public type UserRewards = {
+    points : Nat;
+    discoveries : List.List<PlantIdentification>;
   };
 
-  type Identifier = {
-    #gmail : Text;
-    #phone : Text;
+  public type OldActor = {
+    userProfiles : Map.Map<Principal, OldUserProfile>;
+    userRewards : Map.Map<Principal, UserRewards>;
   };
 
-  type NewActor = {
+  public type NewActor = {
     userProfiles : Map.Map<Principal, NewUserProfile>;
     userRewards : Map.Map<Principal, UserRewards>;
   };
 
   public func run(old : OldActor) : NewActor {
-    let newUserProfiles = old.userProfiles.map<Principal, OldUserProfile, NewUserProfile>(
-      func(_pid, oldProfile) {
+    let newProfiles = old.userProfiles.map<Principal, OldUserProfile, NewUserProfile>(
+      func(_id, profile) {
         {
-          name = oldProfile.name;
-          identifier = #gmail "unknown";
+          profile with
+          character = {
+            id = "unknown";
+            name = "Unknown Character";
+            imageUrl = "";
+            series = "unknown";
+          };
+          badge = "newbie";
         };
       }
     );
     {
-      userProfiles = newUserProfiles;
-      userRewards = old.userRewards;
+      old with
+      userProfiles = newProfiles;
     };
   };
 };
