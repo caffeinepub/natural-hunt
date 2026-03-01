@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Plant detection app with AI-powered plant identification. Features sign-up via Gmail or mobile number, and an interactive anime character mascot that appears on the camera screen, can be moved by users, and when a plant is detected, writes the plant's beneficial uses on a board and speaks about them.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Anime chibi character illustration, nature-themed green outfit with leaf motifs, friendly expression, full body, transparent background (anime-mascot.dim_256x512.png)\n- Rustic wooden chalkboard with a dark writing surface and wooden frame border, transparent background (plant-board.dim_400x300.png)",
+  "existing_features": [
+    {
+      "id": "feature-add-a-sign-up-login-screen-that-allows-users-to-register-and-authenticate-using-either-their-gmail-address-or-a-mobile-phone-number-the-screen-should-appear-before-the-main-app-before-welcomescreen-or-camera-access-and-store-the-chosen-identifier-as-part-of-the-user-profile-in-the-backend",
+      "title": "Add a sign-up / login screen that allows users to register and authenticate using either their Gmail address or a mobile phone number. The screen should appear before the main app (before WelcomeScreen or camera access) and store the chosen identifier as part of the user profile in the backend.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-draggable-anime-character-mascot-overlay-on-the-cameraview-screen-the-character-must-be-visible-whenever-the-camera-is-open-and-users-must-be-able-to-drag-move-it-freely-around-the-screen-using-touch-or-mouse-interaction",
+      "title": "Add a draggable anime character mascot overlay on the CameraView screen. The character must be visible whenever the camera is open and users must be able to drag/move it freely around the screen using touch or mouse interaction.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-when-a-plant-is-successfully-identified-trigger-an-animated-sequence-where-the-anime-character-mascot-1-stands-beside-a-board-that-slides-or-appears-on-screen-2-writes-the-identified-plant-s-beneficial-uses-as-text-on-that-board-and-3-uses-the-web-speech-api-speechsynthesis-to-speak-the-beneficial-uses-aloud-this-sequence-should-play-within-the-plantresultpanel-or-as-an-overlay-triggered-after-plant-detection",
+      "title": "When a plant is successfully identified, trigger an animated sequence where the anime character mascot: (1) stands beside a board that slides or appears on screen, (2) writes the identified plant's beneficial uses as text on that board, and (3) uses the Web Speech API (SpeechSynthesis) to speak the beneficial uses aloud. This sequence should play within the PlantResultPanel or as an overlay triggered after plant detection.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-an-anime-style-chibi-character-illustration-to-be-used-as-the-in-app-mascot-the-character-should-appear-friendly-and-nature-plant-themed-e-g-wearing-a-green-outfit-with-leaf-motifs-suitable-for-overlaying-on-a-camera-view",
+      "title": "Generate an anime-style chibi character illustration to be used as the in-app mascot. The character should appear friendly and nature/plant-themed (e.g., wearing a green outfit with leaf motifs), suitable for overlaying on a camera view.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-a-wooden-chalkboard-illustration-to-serve-as-the-board-the-anime-character-writes-plant-information-on",
+      "title": "Generate a wooden chalkboard illustration to serve as the board the anime character writes plant information on.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Sign-up option with Gmail or mobile number",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Interactive anime character on camera screen that users can move around",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "When a plant is detected, anime character writes beneficial uses on a board, stands beside it, and speaks the information aloud",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Natural Hunt",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

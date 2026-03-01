@@ -1,0 +1,128 @@
+{
+  "kind": "build_request",
+  "title": "Add Sign-Up Options & Interactive Anime Character Mascot with Plant Info Board",
+  "projectName": "Natural Hunt",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Add a sign-up / login screen that allows users to register and authenticate using either their Gmail address or a mobile phone number. The screen should appear before the main app (before WelcomeScreen or camera access) and store the chosen identifier as part of the user profile in the backend.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-recent-1"
+        ],
+        "quotes": [
+          "at the sign up option which their Gmail or mobile number"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A dedicated sign-up/login screen is presented to new users before accessing the app.",
+        "User can enter a Gmail address or a mobile phone number to register.",
+        "Entered identifier is validated (basic email format check or phone number format check).",
+        "User profile is saved to the backend with the Gmail or mobile number identifier.",
+        "Returning users can log back in with the same identifier.",
+        "After successful sign-up/login, the user is taken to the main app (WelcomeScreen or camera view)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add a draggable anime character mascot overlay on the CameraView screen. The character must be visible whenever the camera is open and users must be able to drag/move it freely around the screen using touch or mouse interaction.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent-1"
+        ],
+        "quotes": [
+          "add an anime character on the screen of the app and when people open the camera it should be there and people can move that anime character"
+        ]
+      },
+      "acceptanceCriteria": [
+        "An anime character illustration is rendered as an overlay on the CameraView component.",
+        "The character is visible as soon as the camera view opens.",
+        "The character can be dragged and repositioned anywhere on the screen via touch (mobile) and mouse (desktop).",
+        "The character remains within screen bounds and does not disappear off-screen.",
+        "The character does not block camera capture controls (shutter button, etc.) when not being moved."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "When a plant is successfully identified, trigger an animated sequence where the anime character mascot: (1) stands beside a board that slides or appears on screen, (2) writes the identified plant's beneficial uses as text on that board, and (3) uses the Web Speech API (SpeechSynthesis) to speak the beneficial uses aloud. This sequence should play within the PlantResultPanel or as an overlay triggered after plant detection.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent-1"
+        ],
+        "quotes": [
+          "when any plant find then that anime character tell them about their beneficial uses with writing them on a board and standing on a side of that board and speak"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After a plant is successfully identified, a board element appears on screen alongside the anime character.",
+        "The anime character is positioned standing beside the board.",
+        "The plant's beneficial uses are displayed on the board with a typewriter/writing animation.",
+        "The Web Speech API reads the beneficial uses text aloud automatically when the board appears.",
+        "If SpeechSynthesis is not supported by the browser, the text on the board is still shown silently.",
+        "The animation and speech play without blocking the rest of the result UI (plant name, confidence, points).",
+        "The board and character can be dismissed or fade out after the speech completes or after a user tap."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Generate an anime-style chibi character illustration to be used as the in-app mascot. The character should appear friendly and nature/plant-themed (e.g., wearing a green outfit with leaf motifs), suitable for overlaying on a camera view.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent-1"
+        ],
+        "quotes": [
+          "add an anime character on the screen of the app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "An anime chibi character image is available as a static asset in frontend/public/assets/generated.",
+        "The character has a transparent background (PNG).",
+        "The character is used in REQ-2 and REQ-3 as the mascot overlay."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Generate a wooden chalkboard illustration to serve as the board the anime character writes plant information on.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-recent-1"
+        ],
+        "quotes": [
+          "writing them on a board and standing on a side of that board"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A chalkboard/wooden board image is available as a static asset in frontend/public/assets/generated.",
+        "The board has a transparent or neutral background so it can be overlaid on the camera view.",
+        "The board image is used in REQ-3 for the plant info display."
+      ]
+    }
+  ],
+  "constraints": [
+    "All Motoko logic must remain in the single backend/main.mo actor.",
+    "Do not edit any files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui.",
+    "Use the Web Speech API (SpeechSynthesis) for text-to-speech — no external TTS service integrations.",
+    "Static image assets must be placed in frontend/public/assets/generated and referenced as static paths.",
+    "Sign-up must not require any external OAuth flow beyond what is already supported; use email/phone identifier stored in the backend."
+  ],
+  "nonGoals": [
+    "Actual Gmail OAuth / Google Sign-In integration (only email address as an identifier).",
+    "SMS OTP verification for mobile number sign-up.",
+    "Real-time multiplayer or social features.",
+    "3D anime character rendering (2D illustrated sprite is sufficient).",
+    "Backend AI model changes or new plant database entries."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Anime chibi character illustration, nature-themed green outfit with leaf motifs, friendly expression, full body, transparent background (anime-mascot.dim_256x512.png)",
+      "Rustic wooden chalkboard with a dark writing surface and wooden frame border, transparent background (plant-board.dim_400x300.png)"
+    ],
+    "edits": []
+  }
+}
