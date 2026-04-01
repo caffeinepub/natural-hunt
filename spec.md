@@ -1,14 +1,28 @@
-# Specification
+# Natural Hunt
 
-## Summary
-**Goal:** Add a leaderboard screen, an anime character selection screen, and autonomous character animations to the Natural Hunt app.
+## Current State
+Professional anime-themed plant identification app with Shimeji characters (Naruto, Sasuke, Sakura, Goku, Sailor Moon, Luffy, Pikachu, Totoro), AI plant scanning, camera, leaderboard, profile, share certificates, and presentation screen.
 
-**Planned changes:**
-- Add a leaderboard tab to the bottom navigation bar (trophy/leaderboard icon) that displays users ranked by points, showing their display name, selected anime character avatar, and point total, with the current user's entry highlighted
-- Add a character selection screen accessible after sign-up or from profile/settings, showing 8 selectable anime characters (Naruto Uzumaki, Sasuke Uchiha, Monkey D. Luffy, Roronoa Zoro, Ichigo Kurosaki, Rukia Kuchiki, Son Goku, Vegeta) with character cards displaying name, franchise badge, and avatar
-- Save the selected character to the user's backend profile and display it throughout the app and on the leaderboard
-- Implement autonomous looping CSS or canvas animations for each character (idle/walk/signature move) that play automatically without any user input, with each character having a visually distinct movement pattern
-- Add backend query to retrieve and rank top user scores
-- Add 8 anime-style character avatar images as static assets
+## Requested Changes (Diff)
 
-**User-visible outcome:** Users can pick an anime character as their avatar, see it animate autonomously on screen, and compete on a leaderboard that shows all players ranked by points with their chosen character avatar.
+### Add
+- Madara Uchiha as selectable character (red/dark theme, deep authoritative voice)
+- Obito Uchiha as selectable character (orange mask theme, dramatic voice)
+- Itachi Uchiha as selectable character (dark/crimson theme, calm cool voice)
+- After scanning a plant: character steps forward and presents plant name, detailed info, advantages, and disadvantages in a structured speech bubble / info card narrated by the selected character
+- Character-change button prominently accessible on the scan/home screen (not just profile)
+
+### Modify
+- Character roster expanded to 11 characters (existing 8 + Madara, Obito, Itachi)
+- Plant scan result screen: character appears prominently alongside plant details (name, family, advantages list, disadvantages list, medical uses) with character-specific commentary style
+- Character selection accessible via a floating button on the main screen
+
+### Remove
+- Nothing removed
+
+## Implementation Plan
+1. Expand CHARACTER_DATA with Madara, Obito, Itachi (colors, personalities, voice params, Shimeji CSS)
+2. Add prominent "Change Character" button on home/scan screen
+3. Plant scan result: show structured card with plant name, advantages (green checkmarks), disadvantages (red x marks), medical uses, with character avatar and character-voiced commentary
+4. Character speaks plant info in their unique personality style
+5. Ensure camera one-touch capture + "scan again" option after result
